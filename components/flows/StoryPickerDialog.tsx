@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { FlowStoryRef } from "@/lib/types";
 
 interface Props {
@@ -13,6 +13,8 @@ interface Props {
 
 export default function StoryPickerDialog({ open, onClose, onPick, stories, usedStoryIds }: Props) {
   const [query, setQuery] = useState("");
+  const [activeIndex, setActiveIndex] = useState(0);
+  const listRef = useRef<HTMLDivElement>(null);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -21,6 +23,33 @@ export default function StoryPickerDialog({ open, onClose, onPick, stories, used
       (s) => s.title.toLowerCase().includes(q) || s.storyId.toLowerCase().includes(q),
     );
   }, [stories, query]);
+
+  // Reset active index when filtered list changes
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [filtered]);
+
+  // Scroll active item into view
+  useEffect(() => {
+    if (!listRef.current) return;
+    const item = listRef.current.querySelector(`[data-index="${activeIndex}"]`);
+    item?.scrollIntoView({ block: "nearest" });
+  }, [activeIndex]);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIndex((i) => Math.min(i + 1, filtered.length - 1));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIndex((i) => Math.max(i - 1, 0));
+    } else if (e.key === "Enter" && filtered[activeIndex]) {
+      onPick(filtered[activeIndex]);
+      onClose();
+    } else if (e.key === "Escape") {
+      onClose();
+    }
+  };
 
   if (!open) return null;
 
@@ -37,25 +66,30 @@ export default function StoryPickerDialog({ open, onClose, onPick, stories, used
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="検索..."
             className="w-full bg-gray-950 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
           />
         </div>
-        <div className="overflow-y-auto flex-1 p-2">
+        <div ref={listRef} className="overflow-y-auto flex-1 p-2">
           {filtered.length === 0 ? (
             <p className="text-center text-gray-500 text-sm py-8">該当する Story がありません</p>
           ) : (
-            filtered.map((story) => {
+            filtered.map((story, index) => {
               const used = usedStoryIds.has(story.id);
               return (
                 <button
                   key={story.id}
+                  data-index={index}
                   type="button"
                   onClick={() => {
                     onPick(story);
                     onClose();
                   }}
-                  className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-2"
+                  onMouseEnter={() => setActiveIndex(index)}
+                  className={`w-full text-left px-3 py-2 rounded-lg transition-colors flex items-center gap-2 ${
+                    index === activeIndex ? "bg-gray-700" : "hover:bg-gray-800"
+                  }`}
                 >
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium truncate">{story.title}</div>
