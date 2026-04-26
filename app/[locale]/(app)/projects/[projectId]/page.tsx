@@ -44,6 +44,19 @@ export default async function ProjectPage({
         </div>
       </div>
 
+      <section className="mb-12">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold">{t("flow.title")}</h2>
+          <Link
+            href={`/projects/${project.id}/flows/new`}
+            className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+          >
+            {t("flow.new")}
+          </Link>
+        </div>
+        <FlowList projectId={project.id} />
+      </section>
+
       {project.stories.length === 0 ? (
         <div className="text-center py-20 text-gray-500">
           <p className="text-lg mb-2">{t("story.no_stories")}</p>
@@ -68,19 +81,6 @@ export default async function ProjectPage({
           ))}
         </div>
       )}
-
-      <section className="mt-12">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold">{t("flow.title")}</h2>
-          <Link
-            href={`/projects/${project.id}/flows/new`}
-            className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-          >
-            {t("flow.new")}
-          </Link>
-        </div>
-        <FlowList projectId={project.id} />
-      </section>
 
       <DeleteProjectButton projectId={project.id} />
     </div>
