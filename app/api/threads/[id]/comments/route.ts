@@ -15,6 +15,17 @@ export async function POST(
   if (!body) {
     return Response.json({ error: "body is required" }, { status: 400 });
   }
+  if (typeof body !== "string" || body.length > 10000) {
+    return Response.json({ error: "body must be a string of at most 10000 characters" }, { status: 400 });
+  }
+
+  const thread = await prisma.commentThread.findFirst({
+    where: { id: params.id, story: { project: { ownerId: session.user.id } } },
+    select: { id: true },
+  });
+  if (!thread) {
+    return Response.json({ error: "Not found" }, { status: 404 });
+  }
 
   const comment = await prisma.comment.create({
     data: { threadId: params.id, authorId: session.user.id, body },

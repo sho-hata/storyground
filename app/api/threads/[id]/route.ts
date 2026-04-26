@@ -28,6 +28,14 @@ export async function PATCH(
     return Response.json({ error: "no fields to update" }, { status: 400 });
   }
 
+  const existing = await prisma.commentThread.findFirst({
+    where: { id: params.id, story: { project: { ownerId: session.user.id } } },
+    select: { id: true },
+  });
+  if (!existing) {
+    return Response.json({ error: "Not found" }, { status: 404 });
+  }
+
   const thread = await prisma.commentThread.update({
     where: { id: params.id },
     data,

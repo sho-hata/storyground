@@ -4,7 +4,12 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import type { Session } from "next-auth";
 
-export const isDebugAuth = process.env.AUTH_DEBUG === "true";
+if (process.env.AUTH_DEBUG === "true" && process.env.NODE_ENV === "production") {
+  throw new Error("AUTH_DEBUG must not be enabled in production");
+}
+
+export const isDebugAuth =
+  process.env.AUTH_DEBUG === "true" && process.env.NODE_ENV !== "production";
 
 export const { handlers, auth: nextAuth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),

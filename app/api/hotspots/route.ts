@@ -14,6 +14,14 @@ export async function GET(req: NextRequest) {
     return Response.json({ error: "fromStoryId is required" }, { status: 400 });
   }
 
+  const story = await prisma.story.findFirst({
+    where: { id: fromStoryId, project: { ownerId: session.user.id } },
+    select: { id: true },
+  });
+  if (!story) {
+    return Response.json({ error: "Not found" }, { status: 404 });
+  }
+
   const hotspots = await prisma.hotspot.findMany({
     where: { fromStoryId },
   });
@@ -30,6 +38,14 @@ export async function POST(req: NextRequest) {
   const { fromStoryId, toStoryId, rect } = await req.json();
   if (!fromStoryId || !toStoryId || !rect) {
     return Response.json({ error: "fromStoryId, toStoryId, and rect are required" }, { status: 400 });
+  }
+
+  const fromStory = await prisma.story.findFirst({
+    where: { id: fromStoryId, project: { ownerId: session.user.id } },
+    select: { id: true },
+  });
+  if (!fromStory) {
+    return Response.json({ error: "Not found" }, { status: 404 });
   }
 
   const hotspot = await prisma.hotspot.create({
