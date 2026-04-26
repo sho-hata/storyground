@@ -85,6 +85,7 @@ export default function FlowEditor({ flow, stories }: Props) {
   const router = useRouter();
   const [nodes, setNodes, onNodesChange] = useNodesState<StoryNodeData>(toRFNodes(flow));
   const [edges, setEdges, onEdgesChange] = useEdgesState(toRFEdges(flow));
+  const [flowName, setFlowName] = useState(flow.name);
   const [dirty, setDirty] = useState(false);
   const [saving, setSaving] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -176,6 +177,20 @@ export default function FlowEditor({ flow, stories }: Props) {
     }
   }, [flow.id, nodes, edges]);
 
+  const handleRename = useCallback(async (name: string) => {
+    setFlowName(name);
+    const res = await fetch(`/api/flows/${flow.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, nodes: fromRFNodes(nodes), edges: fromRFEdges(edges) }),
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      setError(body.error ?? "名前の保存に失敗しました");
+      setFlowName(flow.name);
+    }
+  }, [flow.id, flow.name, nodes, edges]);
+
   const handleDeleteFlow = useCallback(async () => {
     if (!confirm("このフローを削除しますか？")) return;
     const res = await fetch(`/api/flows/${flow.id}`, { method: "DELETE" });
@@ -199,11 +214,13 @@ export default function FlowEditor({ flow, stories }: Props) {
   return (
     <div className="flex flex-col flex-1 min-h-0">
       <FlowToolbar
+        flowName={flowName}
         dirty={dirty}
         saving={saving}
         onSave={handleSave}
         onAddStory={() => setPickerOpen(true)}
         onDeleteFlow={handleDeleteFlow}
+        onRename={handleRename}
       />
       {error && (
         <div className="bg-red-900/40 border-b border-red-800 text-red-300 text-sm px-4 py-1.5">
