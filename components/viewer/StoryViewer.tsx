@@ -12,6 +12,7 @@ interface StoryViewerProps {
   pendingCoords: { x: number; y: number } | null;
   onPinPlace: (x: number, y: number) => void;
   onPinClick: (threadId: string) => void;
+  onPinMove?: (threadId: string, x: number, y: number) => void;
   onEscape: () => void;
 }
 
@@ -23,6 +24,7 @@ export default function StoryViewer({
   pendingCoords,
   onPinPlace,
   onPinClick,
+  onPinMove,
   onEscape,
 }: StoryViewerProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -69,6 +71,7 @@ export default function StoryViewer({
           activeThreadId={activeThreadId}
           pendingCoords={pendingCoords}
           onPinClick={onPinClick}
+          onPinMove={onPinMove}
         />
       </div>
     </div>

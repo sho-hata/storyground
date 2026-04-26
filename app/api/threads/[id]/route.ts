@@ -11,14 +11,26 @@ export async function PATCH(
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { status } = await req.json();
-  if (status !== "open" && status !== "resolved") {
-    return Response.json({ error: "status must be open or resolved" }, { status: 400 });
+  const { status, x, y } = await req.json();
+
+  const data: { status?: "open" | "resolved"; x?: number; y?: number } = {};
+
+  if (status !== undefined) {
+    if (status !== "open" && status !== "resolved") {
+      return Response.json({ error: "status must be open or resolved" }, { status: 400 });
+    }
+    data.status = status;
+  }
+  if (x !== undefined) data.x = x;
+  if (y !== undefined) data.y = y;
+
+  if (Object.keys(data).length === 0) {
+    return Response.json({ error: "no fields to update" }, { status: 400 });
   }
 
   const thread = await prisma.commentThread.update({
     where: { id: params.id },
-    data: { status },
+    data,
   });
 
   return Response.json(thread);

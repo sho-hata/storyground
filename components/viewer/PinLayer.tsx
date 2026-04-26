@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import CommentPin from "@/components/viewer/CommentPin";
 import type { ThreadData } from "@/lib/types";
 
@@ -8,11 +9,14 @@ interface PinLayerProps {
   activeThreadId: string | null;
   pendingCoords: { x: number; y: number } | null;
   onPinClick: (threadId: string) => void;
+  onPinMove?: (threadId: string, x: number, y: number) => void;
 }
 
-export default function PinLayer({ threads, activeThreadId, pendingCoords, onPinClick }: PinLayerProps) {
+export default function PinLayer({ threads, activeThreadId, pendingCoords, onPinClick, onPinMove }: PinLayerProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   return (
-    <>
+    <div ref={containerRef} className="absolute inset-0">
       {threads.map((thread, index) => (
         <CommentPin
           key={thread.id}
@@ -23,6 +27,8 @@ export default function PinLayer({ threads, activeThreadId, pendingCoords, onPin
           isResolved={thread.status === "resolved"}
           commentCount={thread.comments.length}
           onClick={() => onPinClick(thread.id)}
+          onMove={onPinMove ? (x, y) => onPinMove(thread.id, x, y) : undefined}
+          containerRef={containerRef}
         />
       ))}
       {/* 配置中の仮ピン */}
@@ -40,6 +46,6 @@ export default function PinLayer({ threads, activeThreadId, pendingCoords, onPin
           +
         </div>
       )}
-    </>
+    </div>
   );
 }

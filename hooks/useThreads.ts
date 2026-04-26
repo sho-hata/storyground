@@ -20,5 +20,5 @@ export function useThreads(storyId: string, showResolved: boolean) {
     fetchThreads();
   }, [fetchThreads]);
 
-  return { threads, loading, mutate: fetchThreads };
+  return { threads, setThreads, loading, mutate: fetchThreads };
 }

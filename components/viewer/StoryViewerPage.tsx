@@ -18,7 +18,7 @@ export default function StoryViewerPage({ storyId, storyUrl, currentUserId }: St
   const [showResolved, setShowResolved] = useState(false);
   const [pendingCoords, setPendingCoords] = useState<{ x: number; y: number } | null>(null);
 
-  const { threads, mutate } = useThreads(storyId, showResolved);
+  const { threads, setThreads, mutate } = useThreads(storyId, showResolved);
 
   const activeThread = threads?.find((t) => t.id === activeThreadId) ?? null;
 
@@ -49,6 +49,18 @@ export default function StoryViewerPage({ storyId, storyUrl, currentUserId }: St
   const handleCommentAdded = useCallback(() => {
     mutate();
   }, [mutate]);
+
+  const handlePinMove = useCallback(
+    async (threadId: string, x: number, y: number) => {
+      setThreads((prev) => prev ? prev.map((t) => t.id === threadId ? { ...t, x, y } : t) : prev);
+      await fetch(`/api/threads/${threadId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ x, y }),
+      });
+    },
+    [setThreads]
+  );
 
   return (
     <div className="flex flex-1 overflow-hidden">
@@ -94,6 +106,7 @@ export default function StoryViewerPage({ storyId, storyUrl, currentUserId }: St
             setPendingCoords(null);
             setIsPlacing(false);
           }}
+          onPinMove={handlePinMove}
           onEscape={() => {
             setIsPlacing(false);
             setPendingCoords(null);

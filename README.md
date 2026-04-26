@@ -51,13 +51,21 @@
 cp .env.example .env
 ```
 
-### 2. データベースとマイグレーション
+### 2. データベース起動
+
+Docker Compose で PostgreSQL を起動します。
 
 ```bash
-pnpm exec prisma migrate dev
+docker compose up -d
 ```
 
-### 3. 開発サーバー
+### 3. マイグレーション
+
+```bash
+pnpm exec prisma migrate deploy
+```
+
+### 4. 開発サーバー
 
 ```bash
 pnpm install
@@ -66,7 +74,21 @@ pnpm dev
 
 ブラウザで [http://localhost:3000](http://localhost:3000) を開きます。トップは `/projects` へリダイレクトされます。
 
-### 4. 本番相当の Google ログイン
+### 5. storybook-demo を使った動作確認
+
+リポジトリ内の `storybook-demo` をサンプル Storybook として使えます。
+
+```bash
+cd storybook-demo
+npm install
+npm run storybook
+```
+
+`http://localhost:6006` で Storybook が起動します。
+
+次に [http://localhost:3000/projects/new](http://localhost:3000/projects/new) から新規プロジェクトを作成し、Storybook URL に `http://localhost:6006` を入力します。プロジェクト画面の「Story を同期」を押すとストーリー一覧が取り込まれます。
+
+### 6. 本番相当の Google ログイン
 
 `AUTH_DEBUG` を外すか `false` にし、`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `NEXTAUTH_URL` を設定して OAuth クライアントを登録します。
 
