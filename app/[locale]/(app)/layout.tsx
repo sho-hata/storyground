@@ -1,14 +1,21 @@
 import { auth, signOut, isDebugAuth } from "@/lib/auth";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 
 export default async function AppLayout({
   children,
+  params: { locale },
 }: {
   children: React.ReactNode;
+  params: { locale: string };
 }) {
+  setRequestLocale(locale);
   const session = await auth();
-  if (!session) redirect("/login");
+  if (!session) redirect(`/${locale}/login`);
+
+  const t = await getTranslations("nav");
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -17,6 +24,7 @@ export default async function AppLayout({
           Storyground
         </Link>
         <div className="flex items-center gap-4">
+          <LocaleSwitcher />
           {session.user?.image && (
             <img
               src={session.user.image}
@@ -36,14 +44,14 @@ export default async function AppLayout({
             <form
               action={async () => {
                 "use server";
-                await signOut({ redirectTo: "/login" });
+                await signOut({ redirectTo: `/${locale}/login` });
               }}
             >
               <button
                 type="submit"
                 className="text-gray-400 hover:text-white text-sm transition-colors"
               >
-                ログアウト
+                {t("logout")}
               </button>
             </form>
           )}

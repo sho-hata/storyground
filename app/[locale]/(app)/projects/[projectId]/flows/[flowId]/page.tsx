@@ -1,15 +1,17 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import FlowEditor from "@/components/flows/FlowEditor";
 import type { FlowData, FlowNodeData, FlowEdgeData } from "@/lib/types";
 
 export default async function FlowPage({
   params,
 }: {
-  params: { projectId: string; flowId: string };
+  params: { projectId: string; flowId: string; locale: string };
 }) {
+  setRequestLocale(params.locale);
   const session = await auth();
 
   const flow = await prisma.flow.findFirst({

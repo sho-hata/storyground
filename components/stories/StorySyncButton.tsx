@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 interface StorySyncButtonProps {
   projectId: string;
@@ -9,6 +10,7 @@ interface StorySyncButtonProps {
 }
 
 export default function StorySyncButton({ projectId, storybookUrl }: StorySyncButtonProps) {
+  const t = useTranslations("sync");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -37,7 +39,7 @@ export default function StorySyncButton({ projectId, storybookUrl }: StorySyncBu
     }
 
     if (!storiesData) {
-      setError("Storybook の story 一覧を取得できませんでした");
+      setError(t("error"));
       setLoading(false);
       return;
     }
@@ -68,7 +70,7 @@ export default function StorySyncButton({ projectId, storybookUrl }: StorySyncBu
         disabled={loading}
         className="bg-gray-800 hover:bg-gray-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
       >
-        {loading ? "同期中..." : "Story を同期"}
+        {loading ? t("syncing") : t("button")}
       </button>
       {error && <p className="text-red-400 text-xs">{error}</p>}
     </div>

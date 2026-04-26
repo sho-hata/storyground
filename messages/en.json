@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "logout": "Logout"
+  },
+  "projects": {
+    "title": "Projects",
+    "new": "New Project",
+    "empty_title": "No projects yet",
+    "empty_desc": "Register a Storybook from \"New Project\"",
+    "storybook_url": "Storybook URL",
+    "name": "Project Name",
+    "create": "Create",
+    "creating": "Creating...",
+    "cancel": "Cancel",
+    "create_failed": "Failed to create project",
+    "stories": "{count} stories",
+    "back": "← Projects"
+  },
+  "sync": {
+    "button": "Sync Stories",
+    "syncing": "Syncing...",
+    "error": "Failed to fetch story list from Storybook"
+  },
+  "story": {
+    "no_stories": "No stories",
+    "no_stories_desc": "Use the \"Sync Stories\" button to import from Storybook",
+    "comments": "{count} comments",
+    "open_storybook": "Open in Storybook",
+    "add_comment": "+ Add Comment",
+    "placing": "Click to place...",
+    "show_resolved": "Show resolved",
+    "hide_resolved": "Hide resolved"
+  },
+  "comment": {
+    "new": "New Comment",
+    "title": "Comments",
+    "hint": "Your comment will be pinned to the clicked position",
+    "placeholder": "Enter comment...",
+    "submit": "Post",
+    "sending": "Sending...",
+    "reply_placeholder": "Reply...",
+    "reply": "Reply",
+    "resolve": "Mark as resolved",
+    "reopen": "Reopen",
+    "close": "Close",
+    "pin": "Comment #{index}"
+  },
+  "flow": {
+    "title": "Flows",
+    "new": "+ New Flow",
+    "new_page_title": "New Flow",
+    "empty": "No flows yet",
+    "name_label": "Flow Name",
+    "name_placeholder": "Login Flow",
+    "desc_label": "Description (optional)",
+    "create": "Create",
+    "creating": "Creating...",
+    "cancel": "Cancel",
+    "back": "← Back to Project",
+    "nodes": "{count} nodes",
+    "duplicate_error": "A flow with this name already exists",
+    "create_failed": "Failed to create flow"
+  },
+  "danger": {
+    "zone": "Danger Zone",
+    "delete_project": "Delete this project",
+    "delete_desc": "All data including stories, comments, and flows will be permanently deleted. This action cannot be undone.",
+    "delete_button": "Delete this project",
+    "confirm": "Are you sure?",
+    "deleting": "Deleting...",
+    "do_delete": "Delete"
+  },
+  "auth": {
+    "subtitle": "A review and comment tool for Storybook components",
+    "login": "Sign in with Google"
+  },
+  "locale": {
+    "ja": "日本語",
+    "en": "English"
+  }
+}

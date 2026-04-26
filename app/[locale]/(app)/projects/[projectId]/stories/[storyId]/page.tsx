@@ -1,14 +1,18 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import StoryViewerPage from "@/components/viewer/StoryViewerPage";
 
 export default async function StoryPage({
   params,
 }: {
-  params: { projectId: string; storyId: string };
+  params: { projectId: string; storyId: string; locale: string };
 }) {
+  setRequestLocale(params.locale);
+  const t = await getTranslations("story");
+
   const session = await auth();
 
   const story = await prisma.story.findFirst({
@@ -43,7 +47,7 @@ export default async function StoryPage({
             <path d="M8 1h3v3" />
             <path d="M11 1 5.5 6.5" />
           </svg>
-          Storybook で開く
+          {t("open_storybook")}
         </a>
       </div>
       <StoryViewerPage

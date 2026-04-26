@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "logout": "ログアウト"
+  },
+  "projects": {
+    "title": "プロジェクト",
+    "new": "新規プロジェクト",
+    "empty_title": "プロジェクトがありません",
+    "empty_desc": "「新規プロジェクト」から Storybook を登録してください",
+    "storybook_url": "Storybook URL",
+    "name": "プロジェクト名",
+    "create": "作成",
+    "creating": "作成中...",
+    "cancel": "キャンセル",
+    "create_failed": "作成に失敗しました",
+    "stories": "{count} stories",
+    "back": "← プロジェクト一覧"
+  },
+  "sync": {
+    "button": "Story を同期",
+    "syncing": "同期中...",
+    "error": "Storybook の story 一覧を取得できませんでした"
+  },
+  "story": {
+    "no_stories": "Story がありません",
+    "no_stories_desc": "「Story を同期」ボタンで Storybook から自動取得できます",
+    "comments": "{count} コメント",
+    "open_storybook": "Storybook で開く",
+    "add_comment": "+ コメントを追加",
+    "placing": "クリックして配置...",
+    "show_resolved": "解決済みを表示",
+    "hide_resolved": "解決済みを非表示"
+  },
+  "comment": {
+    "new": "新しいコメント",
+    "title": "コメント",
+    "hint": "クリックした位置にコメントが付きます",
+    "placeholder": "コメントを入力...",
+    "submit": "投稿",
+    "sending": "送信中...",
+    "reply_placeholder": "返信...",
+    "reply": "返信",
+    "resolve": "解決済みにする",
+    "reopen": "再オープン",
+    "close": "閉じる",
+    "pin": "コメント #{index}"
+  },
+  "flow": {
+    "title": "フロー",
+    "new": "+ 新しいフロー",
+    "new_page_title": "新規フロー",
+    "empty": "フローはまだありません",
+    "name_label": "フロー名",
+    "name_placeholder": "ログインフロー",
+    "desc_label": "説明（任意）",
+    "create": "作成",
+    "creating": "作成中...",
+    "cancel": "キャンセル",
+    "back": "← プロジェクトに戻る",
+    "nodes": "{count} ノード",
+    "duplicate_error": "同じ名前のフローが既に存在します",
+    "create_failed": "作成に失敗しました"
+  },
+  "danger": {
+    "zone": "Danger Zone",
+    "delete_project": "このプロジェクトを削除する",
+    "delete_desc": "ストーリー・コメント・フローを含むすべてのデータが削除されます。この操作は取り消せません。",
+    "delete_button": "プロジェクトを削除する",
+    "confirm": "本当に削除しますか？",
+    "deleting": "削除中...",
+    "do_delete": "削除する"
+  },
+  "auth": {
+    "subtitle": "Storybook コンポーネントにコメント・レビューを行うツール",
+    "login": "Google でログイン"
+  },
+  "locale": {
+    "ja": "日本語",
+    "en": "English"
+  }
+}

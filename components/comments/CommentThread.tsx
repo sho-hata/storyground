@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import CommentItem from "@/components/comments/CommentItem";
 import CommentForm from "@/components/comments/CommentForm";
 import type { ThreadData } from "@/lib/types";
@@ -28,6 +29,7 @@ export default function CommentThread({
   onCommentAdded,
   onClose,
 }: CommentThreadProps) {
+  const t = useTranslations("comment");
   const [submitting, setSubmitting] = useState(false);
 
   async function handleCreateThread(body: string) {
@@ -79,7 +81,7 @@ export default function CommentThread({
       {/* ヘッダー */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-gray-800 shrink-0">
         <span className="text-sm font-medium text-gray-300">
-          {pendingCoords ? "新しいコメント" : "コメント"}
+          {pendingCoords ? t("new") : t("title")}
         </span>
         <div className="flex items-center gap-2">
           {thread && (
@@ -91,13 +93,13 @@ export default function CommentThread({
                   : "bg-gray-700 text-gray-400 hover:bg-gray-600"
               }`}
             >
-              {thread.status === "open" ? "解決済みにする" : "再オープン"}
+              {thread.status === "open" ? t("resolve") : t("reopen")}
             </button>
           )}
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-300 transition-colors"
-            aria-label="閉じる"
+            aria-label={t("close")}
           >
             ✕
           </button>
@@ -115,9 +117,7 @@ export default function CommentThread({
             />
           ))
         ) : (
-          <p className="text-gray-500 text-sm">
-            クリックした位置にコメントが付きます
-          </p>
+          <p className="text-gray-500 text-sm">{t("hint")}</p>
         )}
       </div>
 
@@ -125,8 +125,8 @@ export default function CommentThread({
       <div className="border-t border-gray-800 p-3 shrink-0">
         {pendingCoords ? (
           <CommentForm
-            placeholder="コメントを入力..."
-            submitLabel="投稿"
+            placeholder={t("placeholder")}
+            submitLabel={t("submit")}
             submitting={submitting}
             onSubmit={handleCreateThread}
             onCancel={onPendingCancel}
@@ -134,8 +134,8 @@ export default function CommentThread({
           />
         ) : thread ? (
           <CommentForm
-            placeholder="返信..."
-            submitLabel="返信"
+            placeholder={t("reply_placeholder")}
+            submitLabel={t("reply")}
             submitting={submitting}
             onSubmit={handleAddComment}
           />

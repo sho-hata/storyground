@@ -1,7 +1,10 @@
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { prisma } from "@/lib/prisma";
 
 export default async function FlowList({ projectId }: { projectId: string }) {
+  const t = await getTranslations("flow");
+
   const flows = await prisma.flow.findMany({
     where: { projectId },
     select: {
@@ -17,7 +20,7 @@ export default async function FlowList({ projectId }: { projectId: string }) {
   if (flows.length === 0) {
     return (
       <div className="text-center py-10 text-gray-500 border border-dashed border-gray-800 rounded-xl">
-        <p className="text-sm">フローはまだありません</p>
+        <p className="text-sm">{t("empty")}</p>
       </div>
     );
   }
@@ -35,7 +38,7 @@ export default async function FlowList({ projectId }: { projectId: string }) {
             <p className="text-gray-500 text-xs truncate mb-3">{flow.description}</p>
           )}
           <span className="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full">
-            {flow._count.nodes} ノード
+            {t("nodes", { count: flow._count.nodes })}
           </span>
         </Link>
       ))}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { useThreads } from "@/hooks/useThreads";
 import StoryViewer from "@/components/viewer/StoryViewer";
 import CommentThread from "@/components/comments/CommentThread";
@@ -13,6 +14,7 @@ interface StoryViewerPageProps {
 }
 
 export default function StoryViewerPage({ storyId, storyUrl, currentUserId }: StoryViewerPageProps) {
+  const t = useTranslations("story");
   const [isPlacing, setIsPlacing] = useState(false);
   const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
   const [showResolved, setShowResolved] = useState(false);
@@ -80,7 +82,7 @@ export default function StoryViewerPage({ storyId, storyUrl, currentUserId }: St
                 : "bg-gray-800 text-gray-300 hover:bg-gray-700"
             }`}
           >
-            {isPlacing ? "クリックして配置..." : "+ コメントを追加"}
+            {isPlacing ? t("placing") : t("add_comment")}
           </button>
           <button
             onClick={() => setShowResolved((v) => !v)}
@@ -90,7 +92,7 @@ export default function StoryViewerPage({ storyId, storyUrl, currentUserId }: St
                 : "bg-gray-800 text-gray-500 hover:bg-gray-700"
             }`}
           >
-            {showResolved ? "解決済みを非表示" : "解決済みを表示"}
+            {showResolved ? t("hide_resolved") : t("show_resolved")}
           </button>
         </div>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface CommentFormProps {
   placeholder?: string;
@@ -12,14 +13,18 @@ interface CommentFormProps {
 }
 
 export default function CommentForm({
-  placeholder = "コメントを入力...",
-  submitLabel = "投稿",
+  placeholder,
+  submitLabel,
   submitting = false,
   onSubmit,
   onCancel,
   showCancel = false,
 }: CommentFormProps) {
+  const t = useTranslations("comment");
   const [body, setBody] = useState("");
+
+  const resolvedPlaceholder = placeholder ?? t("placeholder");
+  const resolvedLabel = submitLabel ?? t("submit");
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -33,7 +38,7 @@ export default function CommentForm({
       <textarea
         value={body}
         onChange={(e) => setBody(e.target.value)}
-        placeholder={placeholder}
+        placeholder={resolvedPlaceholder}
         rows={3}
         className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 resize-none"
         onKeyDown={(e) => {
@@ -49,7 +54,7 @@ export default function CommentForm({
             onClick={onCancel}
             className="text-xs px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors"
           >
-            キャンセル
+            {t("close")}
           </button>
         )}
         <button
@@ -57,7 +62,7 @@ export default function CommentForm({
           disabled={submitting || !body.trim()}
           className="text-xs px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white rounded-lg font-medium transition-colors"
         >
-          {submitting ? "送信中..." : submitLabel}
+          {submitting ? t("sending") : resolvedLabel}
         </button>
       </div>
     </form>

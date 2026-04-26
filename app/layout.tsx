@@ -8,11 +8,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params?: { locale?: string };
 }) {
+  const locale = params?.locale ?? "ja";
   return (
-    <html lang="ja">
+    <html lang={locale}>
       <body className="bg-gray-950 text-gray-100 antialiased">{children}</body>
     </html>
   );
