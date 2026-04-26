@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import StorySyncButton from "@/components/stories/StorySyncButton";
+import FlowList from "@/components/flows/FlowList";
 
 export default async function ProjectPage({
   params,
@@ -62,6 +63,19 @@ export default async function ProjectPage({
           ))}
         </div>
       )}
+
+      <section className="mt-12">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold">フロー</h2>
+          <Link
+            href={`/projects/${project.id}/flows/new`}
+            className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+          >
+            + 新しいフロー
+          </Link>
+        </div>
+        <FlowList projectId={project.id} />
+      </section>
     </div>
   );
 }

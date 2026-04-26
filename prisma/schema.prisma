@@ -62,6 +62,7 @@ model Project {
   ownerId      String
   owner        User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   stories      Story[]
+  flows        Flow[]
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
@@ -74,6 +75,7 @@ model Story {
   url       String
   project   Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
   threads   CommentThread[]
+  flowNodes FlowNode[]
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
 
@@ -117,4 +119,53 @@ model Hotspot {
   toStoryId   String
   rect        Json
   createdAt   DateTime @default(now())
+}
+
+model Flow {
+  id          String     @id @default(cuid())
+  projectId   String
+  name        String
+  description String?    @db.Text
+  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  nodes       FlowNode[]
+  edges       FlowEdge[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@unique([projectId, name])
+  @@index([projectId])
+}
+
+model FlowNode {
+  id        String     @id @default(cuid())
+  flowId    String
+  storyId   String
+  x         Float
+  y         Float
+  width     Float      @default(240)
+  height    Float      @default(120)
+  flow      Flow       @relation(fields: [flowId], references: [id], onDelete: Cascade)
+  story     Story      @relation(fields: [storyId], references: [id], onDelete: Restrict)
+  outgoing  FlowEdge[] @relation("FromNode")
+  incoming  FlowEdge[] @relation("ToNode")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([flowId])
+}
+
+model FlowEdge {
+  id           String   @id @default(cuid())
+  flowId       String
+  fromNodeId   String
+  toNodeId     String
+  sourceHandle String?
+  targetHandle String?
+  label        String?
+  flow         Flow     @relation(fields: [flowId], references: [id], onDelete: Cascade)
+  fromNode     FlowNode @relation("FromNode", fields: [fromNodeId], references: [id], onDelete: Cascade)
+  toNode       FlowNode @relation("ToNode", fields: [toNodeId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+
+  @@index([flowId])
 }
