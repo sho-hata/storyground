@@ -1,82 +1,84 @@
+[日本語](./README_ja.md)
+
 # Storyground
 
-[Storybook](https://storybook.js.org) で作られた UI を、ピン留めコメントとストーリー間フローでレビュー・整理するための Web アプリです。
+A web app to review and organize UI built with [Storybook](https://storybook.js.org) using pinned comments and story-to-story flows.
 
-## 概要
+## Overview
 
-プロジェクトに Storybook のベース URL を登録し、ストーリー一覧を同期して iframe でプレビューします。画面上の座標にスレッドを立て、コメントで議論やフィードバックを残せます。さらに React Flow ベースの **フロー** で、ストーリー同士の関係や画面遷移の意図を可視化できます。
+Register a Storybook base URL to a project, sync the story list, and preview each story in an iframe. Create threads at specific coordinates on the screen to leave comments and feedback. Use the React Flow-based **flow editor** to visualize relationships and navigation intent between stories.
 
-## コンセプト
+## Concept
 
-- **Storybook を正とする**: 既存の Storybook 成果物に寄り添い、余計なデプロイ先を増やさずにレビュー体験を足す。
-- **場所のある議論**: iframe 上の相対座標にスレッドを紐づけ、文脈のある指摘にする。
-- **一覧から関係図へ**: 同期したストーリーをノードにし、エッジで UX / 導線の意図を表現する（将来のホットスポット拡張の土台も Prisma に用意済み）。
+- **Storybook as the source of truth**: Complement your existing Storybook artifacts with a review layer — no extra deployment needed.
+- **Context-aware discussions**: Threads are anchored to relative coordinates on the iframe, keeping feedback in context.
+- **From list to diagram**: Synced stories become nodes; edges express UX flow and navigation intent (the Prisma schema also lays groundwork for future hotspot features).
 
-## 使い方
+## Usage
 
-1. **ログイン**  
-   本番相当では Google ログイン。ローカルでは `.env` の `AUTH_DEBUG=true` により、OAuth なしのデバッグユーザーで入れます（ヘッダーに `DEBUG` 表示）。
+1. **Log in**
+   Google login in production. Locally, set `AUTH_DEBUG=true` in `.env` to sign in as a debug user without OAuth (a `DEBUG` badge appears in the header).
 
-2. **プロジェクトを作る**  
-   「新規プロジェクト」から名前と **Storybook のトップ URL**（例: `https://.../`）を登録します。匿名アクセス可能な URL か、自前配信の Storybook を想定します。
+2. **Create a project**
+   Go to "New project" and enter a name and your **Storybook top-level URL** (e.g. `https://.../`). The URL should be publicly accessible or self-hosted.
 
-3. **ストーリーを同期**  
-   プロジェクト画面の「**Story を同期**」で、`index.json`（Storybook 7+）または `stories.json`（v6）を取得し、DB にストーリー行を upsert します。プレビュー用 URL は `iframe.html?id=...` 形式で保存されます。
+3. **Sync stories**
+   Click **"Sync stories"** on the project page. This fetches `index.json` (Storybook 7+) or `stories.json` (v6) and upserts story rows into the database. Preview URLs are stored in `iframe.html?id=...` format.
 
-4. **ストーリーを開いてコメント**  
-   一覧からストーリーを選ぶ。`+ コメントを追加` で配置モードにし、プレビュー上をクリックしてスレッドを作成。解決済みの表示切替や Esc キャンセルに対応します。
+4. **Open a story and comment**
+   Select a story from the list. Click `+ Add comment` to enter placement mode, then click anywhere on the preview to create a thread. Supports resolved/unresolved toggling and Escape to cancel.
 
-5. **フローを編集**（任意）  
-   プロジェクトの「+ 新しいフロー」でフローを作成し、ストーリーをノードとして配置・接続します。保存はフロー編集画面から API 経由で行います。
+5. **Edit a flow** (optional)
+   Create a flow with "+ New flow" on the project page. Place stories as nodes and connect them with edges. Save from the flow editor via the API.
 
-## 前提・制約
+## Requirements & Limitations
 
-- Storybook 側の **index / stories 一覧** が、サーバー（Next の API 経由）から取得できる必要があります。CORS はクライアント直 fetch ではなく `proxy-storybook` API 経由で吸収していますが、**認証必須の Storybook** は未対応の場合があります。
-- プレビューは **iframe**。Storybook 側の `X-Frame-Options` 等によっては埋め込めないことがあります。
+- The Storybook **index / stories manifest** must be fetchable from the server (via Next.js API). CORS is handled through the `proxy-storybook` API route rather than direct client-side fetches, but **authentication-protected Storybooks** may not work.
+- Previews are rendered in an **iframe**. Embedding may be blocked depending on the Storybook's `X-Frame-Options` or CSP settings.
 
-## 技術スタック
+## Tech Stack
 
-- [Next.js](https://nextjs.org) 14（App Router） / React 18
-- [PostgreSQL](https://www.postgresql.org/) + [Prisma](https://www.prisma.io/) 7（`@prisma/adapter-pg`）
-- [NextAuth.js](https://next-auth.js.org) v5（Google）+ `@auth/prisma-adapter`
-- [React Flow](https://reactflow.dev/)（フロー編集）
+- [Next.js](https://nextjs.org) 14 (App Router) / React 18
+- [PostgreSQL](https://www.postgresql.org/) + [Prisma](https://www.prisma.io/) 7 (`@prisma/adapter-pg`)
+- [NextAuth.js](https://next-auth.js.org) v5 (Google) + `@auth/prisma-adapter`
+- [React Flow](https://reactflow.dev/) (flow editor)
 
-## ローカル開発
+## Local Development
 
-### 1. 環境変数
+### 1. Environment variables
 
-`.env.example` を `.env` にコピーし、少なくとも `DATABASE_URL` と `AUTH_SECRET` を設定します。ローカル試行だけなら `AUTH_DEBUG=true` を推奨します。
+Copy `.env.example` to `.env` and set at minimum `DATABASE_URL` and `AUTH_SECRET`. For local testing, `AUTH_DEBUG=true` is recommended.
 
 ```bash
 cp .env.example .env
 ```
 
-### 2. データベース起動
+### 2. Start the database
 
-Docker Compose で PostgreSQL を起動します。
+Start PostgreSQL with Docker Compose.
 
 ```bash
 docker compose up -d
 ```
 
-### 3. マイグレーション
+### 3. Run migrations
 
 ```bash
 pnpm exec prisma migrate deploy
 ```
 
-### 4. 開発サーバー
+### 4. Start the dev server
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-ブラウザで [http://localhost:3000](http://localhost:3000) を開きます。トップは `/projects` へリダイレクトされます。
+Open [http://localhost:3000](http://localhost:3000) in your browser. The root redirects to `/projects`.
 
-### 5. storybook-demo を使った動作確認
+### 5. Try it with storybook-demo
 
-リポジトリ内の `storybook-demo` をサンプル Storybook として使えます。
+The repository includes a `storybook-demo` you can use as a sample Storybook.
 
 ```bash
 cd storybook-demo
@@ -84,20 +86,20 @@ npm install
 npm run storybook
 ```
 
-`http://localhost:6006` で Storybook が起動します。
+Storybook starts at `http://localhost:6006`.
 
-次に [http://localhost:3000/projects/new](http://localhost:3000/projects/new) から新規プロジェクトを作成し、Storybook URL に `http://localhost:6006` を入力します。プロジェクト画面の「Story を同期」を押すとストーリー一覧が取り込まれます。
+Then create a new project at [http://localhost:3000/projects/new](http://localhost:3000/projects/new) and enter `http://localhost:6006` as the Storybook URL. Click "Sync stories" on the project page to import the story list.
 
-### 6. 本番相当の Google ログイン
+### 6. Google login for production
 
-`AUTH_DEBUG` を外すか `false` にし、`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `NEXTAUTH_URL` を設定して OAuth クライアントを登録します。
+Remove `AUTH_DEBUG` (or set it to `false`) and configure `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `NEXTAUTH_URL` with a registered OAuth client.
 
-## ドキュメント
+## Documentation
 
-- [アーキテクチャ](docs/architecture.md) — システム構成、データモデル、主要なリクエストフロー
+- [Architecture](docs/architecture.md) — System structure, data model, and key request flows
 
-## 参考
+## References
 
-- [Next.js ドキュメント](https://nextjs.org/docs)
-- [Prisma ドキュメント](https://www.prisma.io/docs)
+- [Next.js Docs](https://nextjs.org/docs)
+- [Prisma Docs](https://www.prisma.io/docs)
 - [Storybook — Publish](https://storybook.js.org/docs/sharing/publish-storybook)
