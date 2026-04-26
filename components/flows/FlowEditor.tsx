@@ -91,16 +91,13 @@ export default function FlowEditor({ flow, stories }: Props) {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const usedStoryIds = useMemo(
-    () => new Set(nodes.map((n) => n.data.story.id)),
-    [nodes],
-  );
+  const usedStoryIds = useMemo(() => new Set(nodes.map((n) => n.data.story.id)), [nodes]);
 
   const handleNodesChange = useCallback(
     (changes: Parameters<typeof onNodesChange>[0]) => {
       onNodesChange(changes);
-      const meaningful = changes.some(
-        (c) => c.type === "position" ? c.dragging === false : c.type !== "select",
+      const meaningful = changes.some((c) =>
+        c.type === "position" ? c.dragging === false : c.type !== "select",
       );
       if (meaningful) setDirty(true);
     },
@@ -177,19 +174,22 @@ export default function FlowEditor({ flow, stories }: Props) {
     }
   }, [flow.id, nodes, edges]);
 
-  const handleRename = useCallback(async (name: string) => {
-    setFlowName(name);
-    const res = await fetch(`/api/flows/${flow.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, nodes: fromRFNodes(nodes), edges: fromRFEdges(edges) }),
-    });
-    if (!res.ok) {
-      const body = await res.json().catch(() => ({}));
-      setError(body.error ?? "名前の保存に失敗しました");
-      setFlowName(flow.name);
-    }
-  }, [flow.id, flow.name, nodes, edges]);
+  const handleRename = useCallback(
+    async (name: string) => {
+      setFlowName(name);
+      const res = await fetch(`/api/flows/${flow.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, nodes: fromRFNodes(nodes), edges: fromRFEdges(edges) }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        setError(body.error ?? "名前の保存に失敗しました");
+        setFlowName(flow.name);
+      }
+    },
+    [flow.id, flow.name, nodes, edges],
+  );
 
   const handleDeleteFlow = useCallback(async () => {
     if (!confirm("このフローを削除しますか？")) return;
@@ -241,11 +241,7 @@ export default function FlowEditor({ flow, stories }: Props) {
         >
           <Background color="#1f2937" gap={20} />
           <Controls className="!bg-gray-900 !border-gray-700" />
-          <MiniMap
-            className="!bg-gray-900"
-            nodeColor="#374151"
-            maskColor="rgba(0,0,0,0.6)"
-          />
+          <MiniMap className="!bg-gray-900" nodeColor="#374151" maskColor="rgba(0,0,0,0.6)" />
         </ReactFlow>
       </div>
       <StoryPickerDialog

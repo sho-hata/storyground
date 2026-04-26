@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { DashboardPage } from './DashboardPage';
+import type { Meta, StoryObj } from "@storybook/react";
+import { DashboardPage } from "./DashboardPage";
 
 const meta = {
-  title: 'Pages/Dashboard',
+  title: "Pages/Dashboard",
   component: DashboardPage,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof DashboardPage>;
 
 export default meta;

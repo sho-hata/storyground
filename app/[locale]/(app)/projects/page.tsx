@@ -3,11 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 
-export default async function ProjectsPage({
-  params: { locale },
-}: {
-  params: { locale: string };
-}) {
+export default async function ProjectsPage({ params: { locale } }: { params: { locale: string } }) {
   setRequestLocale(locale);
   const t = await getTranslations("projects");
 
@@ -45,7 +41,9 @@ export default async function ProjectsPage({
             >
               <h2 className="font-semibold text-lg mb-1">{project.name}</h2>
               <p className="text-gray-400 text-sm truncate mb-3">{project.storybookUrl}</p>
-              <p className="text-gray-500 text-xs">{t("stories", { count: project._count.stories })}</p>
+              <p className="text-gray-500 text-xs">
+                {t("stories", { count: project._count.stories })}
+              </p>
             </Link>
           ))}
         </div>

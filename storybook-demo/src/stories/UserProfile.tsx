@@ -1,39 +1,38 @@
-import React from 'react';
-import { Avatar } from './Avatar';
-import { Badge } from './Badge';
-import { Button } from './Button';
-import './components.css';
+import React from "react";
+import { Avatar } from "./Avatar";
+import { Badge } from "./Badge";
+import { Button } from "./Button";
+import "./components.css";
 
 export interface UserProfileProps {
   name: string;
   role: string;
   avatarUrl?: string;
   stats?: { label: string; value: string | number }[];
-  status?: 'online' | 'away' | 'offline';
+  status?: "online" | "away" | "offline";
 }
 
-const statusColors = { online: '#22c55e', away: '#f59e0b', offline: '#9ca3af' };
-const statusLabels = { online: 'オンライン', away: '離席中', offline: 'オフライン' };
+const statusLabels = { online: "オンライン", away: "離席中", offline: "オフライン" };
 
 export const UserProfile = ({
   name,
   role,
   avatarUrl,
   stats = [
-    { label: 'プロジェクト', value: 12 },
-    { label: 'レビュー', value: 48 },
-    { label: 'コメント', value: 156 },
+    { label: "プロジェクト", value: 12 },
+    { label: "レビュー", value: 48 },
+    { label: "コメント", value: 156 },
   ],
-  status = 'online',
+  status = "online",
 }: UserProfileProps) => (
   <div className="user-profile">
     <Avatar name={name} src={avatarUrl} size="xl" />
     <div className="user-profile__info">
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <span className="user-profile__name">{name}</span>
         <Badge
           label={statusLabels[status]}
-          variant={status === 'online' ? 'success' : status === 'away' ? 'warning' : 'neutral'}
+          variant={status === "online" ? "success" : status === "away" ? "warning" : "neutral"}
           dot
         />
       </div>
@@ -46,7 +45,7 @@ export const UserProfile = ({
           </div>
         ))}
       </div>
-      <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
+      <div style={{ marginTop: 12, display: "flex", gap: 8 }}>
         <Button variant="primary" size="sm" label="メッセージ" />
         <Button variant="outline" size="sm" label="プロフィール" />
       </div>

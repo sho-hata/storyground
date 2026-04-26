@@ -12,7 +12,15 @@ interface Props {
   onRename: (name: string) => void;
 }
 
-export default function FlowToolbar({ flowName, dirty, saving, onSave, onAddStory, onDeleteFlow, onRename }: Props) {
+export default function FlowToolbar({
+  flowName,
+  dirty,
+  saving,
+  onSave,
+  onAddStory,
+  onDeleteFlow,
+  onRename,
+}: Props) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(flowName);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -67,9 +75,7 @@ export default function FlowToolbar({ flowName, dirty, saving, onSave, onAddStor
         )}
       </div>
 
-      {dirty && !saving && (
-        <span className="text-xs text-yellow-500">未保存の変更</span>
-      )}
+      {dirty && !saving && <span className="text-xs text-yellow-500">未保存の変更</span>}
       {saving && <span className="text-xs text-gray-400">保存中...</span>}
 
       <button

@@ -6,9 +6,7 @@ export function useThreads(storyId: string, showResolved: boolean) {
   const [loading, setLoading] = useState(true);
 
   const fetchThreads = useCallback(async () => {
-    const res = await fetch(
-      `/api/stories/${storyId}/threads?showResolved=${showResolved}`
-    );
+    const res = await fetch(`/api/stories/${storyId}/threads?showResolved=${showResolved}`);
     if (res.ok) {
       const data = await res.json();
       setThreads(data);

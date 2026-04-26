@@ -2,11 +2,7 @@ import { signIn, isDebugAuth } from "@/lib/auth";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
-export default async function LoginPage({
-  params: { locale },
-}: {
-  params: { locale: string };
-}) {
+export default async function LoginPage({ params: { locale } }: { params: { locale: string } }) {
   setRequestLocale(locale);
 
   if (isDebugAuth) {

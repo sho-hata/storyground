@@ -76,10 +76,30 @@ export default function StoryNode({ data, selected }: NodeProps<StoryNodeData>) 
         window.open(`/projects/${data.projectId}/stories/${data.story.id}`, "_blank");
       }}
     >
-      <Handle type="source" id="top" position={Position.Top} className="!bg-gray-400 !w-2.5 !h-2.5" />
-      <Handle type="source" id="right" position={Position.Right} className="!bg-gray-400 !w-2.5 !h-2.5" />
-      <Handle type="source" id="bottom" position={Position.Bottom} className="!bg-gray-400 !w-2.5 !h-2.5" />
-      <Handle type="source" id="left" position={Position.Left} className="!bg-gray-400 !w-2.5 !h-2.5" />
+      <Handle
+        type="source"
+        id="top"
+        position={Position.Top}
+        className="!bg-gray-400 !w-2.5 !h-2.5"
+      />
+      <Handle
+        type="source"
+        id="right"
+        position={Position.Right}
+        className="!bg-gray-400 !w-2.5 !h-2.5"
+      />
+      <Handle
+        type="source"
+        id="bottom"
+        position={Position.Bottom}
+        className="!bg-gray-400 !w-2.5 !h-2.5"
+      />
+      <Handle
+        type="source"
+        id="left"
+        position={Position.Left}
+        className="!bg-gray-400 !w-2.5 !h-2.5"
+      />
 
       <div className="px-4 py-3">
         <div className="font-medium text-sm text-white truncate">{data.story.title}</div>

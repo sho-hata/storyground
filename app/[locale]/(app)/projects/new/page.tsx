@@ -38,9 +38,7 @@ export default function NewProjectPage() {
       <h1 className="text-2xl font-bold mb-8">{t("new")}</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1.5">
-            {t("name")}
-          </label>
+          <label className="block text-sm font-medium text-gray-300 mb-1.5">{t("name")}</label>
           <input
             type="text"
             value={name}

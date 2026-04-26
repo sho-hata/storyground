@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { SettingsPage } from './SettingsPage';
+import type { Meta, StoryObj } from "@storybook/react";
+import { SettingsPage } from "./SettingsPage";
 
 const meta = {
-  title: 'Pages/Settings',
+  title: "Pages/Settings",
   component: SettingsPage,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof SettingsPage>;
 
 export default meta;

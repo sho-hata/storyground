@@ -86,8 +86,8 @@ export default function CommentPin({
         isActive
           ? "bg-blue-500 border-white text-white scale-110 ring-2 ring-blue-400"
           : isResolved
-          ? "bg-gray-600 border-gray-400 text-gray-300"
-          : "bg-blue-600 border-white text-white hover:bg-blue-500"
+            ? "bg-gray-600 border-gray-400 text-gray-300"
+            : "bg-blue-600 border-white text-white hover:bg-blue-500"
       }`}
       title={`コメント #${index}`}
     >

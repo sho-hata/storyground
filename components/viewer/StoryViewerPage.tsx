@@ -13,7 +13,11 @@ interface StoryViewerPageProps {
   currentUserId: string;
 }
 
-export default function StoryViewerPage({ storyId, storyUrl, currentUserId }: StoryViewerPageProps) {
+export default function StoryViewerPage({
+  storyId,
+  storyUrl,
+  currentUserId,
+}: StoryViewerPageProps) {
   const t = useTranslations("story");
   const [isPlacing, setIsPlacing] = useState(false);
   const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
@@ -36,7 +40,7 @@ export default function StoryViewerPage({ storyId, storyUrl, currentUserId }: St
       setActiveThreadId(thread.id);
       mutate();
     },
-    [mutate]
+    [mutate],
   );
 
   const handlePendingCancel = useCallback(() => {
@@ -54,14 +58,16 @@ export default function StoryViewerPage({ storyId, storyUrl, currentUserId }: St
 
   const handlePinMove = useCallback(
     async (threadId: string, x: number, y: number) => {
-      setThreads((prev) => prev ? prev.map((t) => t.id === threadId ? { ...t, x, y } : t) : prev);
+      setThreads((prev) =>
+        prev ? prev.map((t) => (t.id === threadId ? { ...t, x, y } : t)) : prev,
+      );
       await fetch(`/api/threads/${threadId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ x, y }),
       });
     },
-    [setThreads]
+    [setThreads],
   );
 
   return (
@@ -77,9 +83,7 @@ export default function StoryViewerPage({ storyId, storyUrl, currentUserId }: St
               setActiveThreadId(null);
             }}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-              isPlacing
-                ? "bg-blue-600 text-white"
-                : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+              isPlacing ? "bg-blue-600 text-white" : "bg-gray-800 text-gray-300 hover:bg-gray-700"
             }`}
           >
             {isPlacing ? t("placing") : t("add_comment")}

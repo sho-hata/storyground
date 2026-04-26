@@ -12,7 +12,13 @@ interface PinLayerProps {
   onPinMove?: (threadId: string, x: number, y: number) => void;
 }
 
-export default function PinLayer({ threads, activeThreadId, pendingCoords, onPinClick, onPinMove }: PinLayerProps) {
+export default function PinLayer({
+  threads,
+  activeThreadId,
+  pendingCoords,
+  onPinClick,
+  onPinMove,
+}: PinLayerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (

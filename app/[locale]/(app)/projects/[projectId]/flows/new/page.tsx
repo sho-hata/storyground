@@ -4,11 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter, Link } from "@/i18n/navigation";
 
-export default function NewFlowPage({
-  params,
-}: {
-  params: { projectId: string };
-}) {
+export default function NewFlowPage({ params }: { params: { projectId: string } }) {
   const t = useTranslations("flow");
   const router = useRouter();
   const [name, setName] = useState("");

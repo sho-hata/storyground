@@ -1,7 +1,7 @@
-import React from 'react';
-import { Avatar } from './Avatar';
-import { Button } from './Button';
-import './components.css';
+import React from "react";
+import { Avatar } from "./Avatar";
+import { Button } from "./Button";
+import "./components.css";
 
 export interface NavbarProps {
   brand?: string;
@@ -11,14 +11,14 @@ export interface NavbarProps {
 }
 
 export const Navbar = ({
-  brand = 'Acme Inc.',
+  brand = "Acme Inc.",
   links = [
-    { label: 'ダッシュボード', active: true },
-    { label: 'プロジェクト' },
-    { label: 'チーム' },
-    { label: '設定' },
+    { label: "ダッシュボード", active: true },
+    { label: "プロジェクト" },
+    { label: "チーム" },
+    { label: "設定" },
   ],
-  userName = 'Taro',
+  userName = "Taro",
   userAvatar,
 }: NavbarProps) => (
   <nav className="navbar">
@@ -26,7 +26,7 @@ export const Navbar = ({
     <ul className="navbar__links">
       {links.map((link) => (
         <li key={link.label}>
-          <a className={`navbar__link ${link.active ? 'navbar__link--active' : ''}`}>
+          <a className={`navbar__link ${link.active ? "navbar__link--active" : ""}`}>
             {link.label}
           </a>
         </li>

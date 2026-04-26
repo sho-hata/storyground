@@ -47,11 +47,7 @@ export default function StoryViewer({
 
   return (
     <div className="w-full h-full relative">
-      <iframe
-        src={storyUrl}
-        className="w-full h-full border-0"
-        title="Storybook Story"
-      />
+      <iframe src={storyUrl} className="w-full h-full border-0" title="Storybook Story" />
       {/* オーバーレイ: isPlacing 時のみクリックを受け取る */}
       <div
         ref={overlayRef}

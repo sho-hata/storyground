@@ -28,16 +28,16 @@ flowchart LR
 
 ## ディレクトリの役割（抜粋）
 
-| 領域 | 主な場所 | 役割 |
-|------|----------|------|
-| 認証 | `lib/auth.ts`, `app/api/auth/[...nextauth]/` | Google OAuth、または `AUTH_DEBUG` 時の固定デバッグセッション。Prisma 上に debug ユーザーを upsert。 |
-| DB アクセス | `lib/prisma.ts` | `pg` プール + `PrismaPg` アダプタで `PrismaClient` を生成（開発時シングルトン）。 |
-| アプリシェル | `app/(app)/layout.tsx` | 未ログインは `/login` へ。ヘッダーにユーザーと DEBUG 表示。 |
-| プロジェクト / 同期 UI | `app/(app)/projects/**`, `components/stories/StorySyncButton.tsx` | プロジェクト CRUD 画面、Storybook からの一括 sync。 |
-| ストーリービューア | `components/viewer/*`, `hooks/useThreads.ts` | iframe + 座標正規化オーバーレイ、スレッド API とのクライアント整合。 |
-| コメント | `components/comments/*` | スレッド / コメントの作成・更新。 |
-| フロー | `components/flows/*`, `app/api/flows/*`, `app/api/projects/.../flows/*` | React Flow によるノード / エッジ編集、PUT で一括永続化。 |
-| デモ用 | `storybook-demo/` | 本番アプリとは別樹の CRA + Storybook サンプル（参照用）。 |
+| 領域                   | 主な場所                                                                | 役割                                                                                                |
+| ---------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| 認証                   | `lib/auth.ts`, `app/api/auth/[...nextauth]/`                            | Google OAuth、または `AUTH_DEBUG` 時の固定デバッグセッション。Prisma 上に debug ユーザーを upsert。 |
+| DB アクセス            | `lib/prisma.ts`                                                         | `pg` プール + `PrismaPg` アダプタで `PrismaClient` を生成（開発時シングルトン）。                   |
+| アプリシェル           | `app/(app)/layout.tsx`                                                  | 未ログインは `/login` へ。ヘッダーにユーザーと DEBUG 表示。                                         |
+| プロジェクト / 同期 UI | `app/(app)/projects/**`, `components/stories/StorySyncButton.tsx`       | プロジェクト CRUD 画面、Storybook からの一括 sync。                                                 |
+| ストーリービューア     | `components/viewer/*`, `hooks/useThreads.ts`                            | iframe + 座標正規化オーバーレイ、スレッド API とのクライアント整合。                                |
+| コメント               | `components/comments/*`                                                 | スレッド / コメントの作成・更新。                                                                   |
+| フロー                 | `components/flows/*`, `app/api/flows/*`, `app/api/projects/.../flows/*` | React Flow によるノード / エッジ編集、PUT で一括永続化。                                            |
+| デモ用                 | `storybook-demo/`                                                       | 本番アプリとは別樹の CRA + Storybook サンプル（参照用）。                                           |
 
 ## ルーティング
 

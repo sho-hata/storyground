@@ -37,7 +37,10 @@ export async function POST(req: NextRequest) {
 
   const { fromStoryId, toStoryId, rect } = await req.json();
   if (!fromStoryId || !toStoryId || !rect) {
-    return Response.json({ error: "fromStoryId, toStoryId, and rect are required" }, { status: 400 });
+    return Response.json(
+      { error: "fromStoryId, toStoryId, and rect are required" },
+      { status: 400 },
+    );
   }
 
   const fromStory = await prisma.story.findFirst({

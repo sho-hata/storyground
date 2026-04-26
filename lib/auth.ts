@@ -11,7 +11,12 @@ if (process.env.AUTH_DEBUG === "true" && process.env.NODE_ENV === "production") 
 export const isDebugAuth =
   process.env.AUTH_DEBUG === "true" && process.env.NODE_ENV !== "production";
 
-export const { handlers, auth: nextAuth, signIn, signOut } = NextAuth({
+export const {
+  handlers,
+  auth: nextAuth,
+  signIn,
+  signOut,
+} = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
     Google({

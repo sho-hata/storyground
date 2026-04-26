@@ -1,7 +1,7 @@
-import React from 'react';
-import { Input } from './Input';
-import { Button } from './Button';
-import './components.css';
+import React from "react";
+import { Input } from "./Input";
+import { Button } from "./Button";
+import "./components.css";
 
 export interface LoginFormProps {
   title?: string;
@@ -10,8 +10,8 @@ export interface LoginFormProps {
 }
 
 export const LoginForm = ({
-  title = 'ログイン',
-  subtitle = 'アカウントにサインインしてください',
+  title = "ログイン",
+  subtitle = "アカウントにサインインしてください",
   onSubmit,
 }: LoginFormProps) => (
   <div className="login-form">

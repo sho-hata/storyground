@@ -42,7 +42,17 @@ export default async function StoryPage({
           rel="noopener noreferrer"
           className="ml-auto flex items-center gap-1.5 text-xs font-medium text-white bg-[#FF4785] hover:bg-[#e03a76] rounded px-3 py-1.5 transition-colors"
         >
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
             <path d="M5 2H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V7" />
             <path d="M8 1h3v3" />
             <path d="M11 1 5.5 6.5" />
@@ -50,11 +60,7 @@ export default async function StoryPage({
           {t("open_storybook")}
         </a>
       </div>
-      <StoryViewerPage
-        storyId={story.id}
-        storyUrl={story.url}
-        currentUserId={session!.user.id}
-      />
+      <StoryViewerPage storyId={story.id} storyUrl={story.url} currentUserId={session!.user.id} />
     </div>
   );
 }

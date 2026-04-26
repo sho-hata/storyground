@@ -32,7 +32,10 @@ export default async function ProjectPage({
   return (
     <div className="p-8 max-w-4xl mx-auto w-full">
       <div className="mb-6">
-        <Link href="/projects" className="text-gray-500 hover:text-gray-300 text-sm mb-2 inline-block">
+        <Link
+          href="/projects"
+          className="text-gray-500 hover:text-gray-300 text-sm mb-2 inline-block"
+        >
           {t("projects.back")}
         </Link>
         <div className="flex items-center justify-between">
