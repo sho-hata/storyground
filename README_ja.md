@@ -4,10 +4,6 @@
 
 [Storybook](https://storybook.js.org) で作られた UI を、ピン留めコメントとストーリー間フローでレビュー・整理するための Web アプリです。
 
-## デモ
-
-<video src="docs/assets/demo.mp4" controls width="100%"></video>
-
 ## 概要
 
 プロジェクトに Storybook のベース URL を登録し、ストーリー一覧を同期して iframe でプレビューします。画面上の座標にスレッドを立て、コメントで議論やフィードバックを残せます。さらに React Flow ベースの **フロー** で、ストーリー同士の関係や画面遷移の意図を可視化できます。

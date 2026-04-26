@@ -4,10 +4,6 @@
 
 A web app to review and organize UI built with [Storybook](https://storybook.js.org) using pinned comments and story-to-story flows.
 
-## Demo
-
-<video src="docs/assets/demo.mp4" controls width="100%"></video>
-
 ## Overview
 
 Register a Storybook base URL to a project, sync the story list, and preview each story in an iframe. Create threads at specific coordinates on the screen to leave comments and feedback. Use the React Flow-based **flow editor** to visualize relationships and navigation intent between stories.
