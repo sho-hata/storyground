@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import StorySyncButton from "@/components/stories/StorySyncButton";
 import FlowList from "@/components/flows/FlowList";
+import DeleteProjectButton from "@/components/projects/DeleteProjectButton";
 
 export default async function ProjectPage({
   params,
@@ -76,6 +77,8 @@ export default async function ProjectPage({
         </div>
         <FlowList projectId={project.id} />
       </section>
+
+      <DeleteProjectButton projectId={project.id} />
     </div>
   );
 }
